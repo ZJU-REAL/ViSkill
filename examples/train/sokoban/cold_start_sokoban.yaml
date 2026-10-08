@@ -1,0 +1,28 @@
+env: sokoban
+
+seed: [1, 10000, 1]         # [start, end, max_repeat_per_seed]
+
+size: 100                   # target number of skills
+dedup_threshold: 0.95       # exclude candidates with similarity > this after each selection
+output: ./skill_library_cold_start/sokoban
+
+env_config:
+  dim_room: [6, 6]
+  num_boxes: 1
+  min_solution_steps: [1, 5]
+  bfs_max_depth: 200
+
+distill:
+  model: gpt-5.4-mini-0317-global
+  api_base: "YOUR_API_BASE_URL"
+  api_key: "YOUR_API_KEY"
+  max_retries: 20
+
+render:
+  strategy: true
+  trajectory:
+    enable: true
+    action_type: text
+    show_title: true
+    draw_path: true
+    thumbnail_size: null

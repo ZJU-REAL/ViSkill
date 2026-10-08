@@ -1,0 +1,25 @@
+env: frozenlake
+
+seed: [1, 10000, 1]         # [start, end, max_repeat_per_seed]
+
+size: 20                   # target number of skills
+dedup_threshold: 0.95      # exclude candidates with similarity > this after each selection
+output: ./skill_library_cold_start/frozenlake
+
+env_config:
+  size: 4
+
+distill:
+  model: gpt-5.4-mini-0317-global
+  api_base: "YOUR_API_BASE_URL"
+  api_key: "YOUR_API_KEY"
+  max_retries: 20
+
+render:
+  strategy: true
+  trajectory:
+    enable: true
+    action_type: text
+    show_title: true
+    draw_path: true
+    thumbnail_size: 120

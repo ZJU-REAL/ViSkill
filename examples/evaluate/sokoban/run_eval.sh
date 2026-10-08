@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BASEDIR="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
+CONFIG="${1:-$SCRIPT_DIR/config.yaml}"
+shift 2>/dev/null || true
+
+LOG_FILE="run.log"
+
+python -m vagen.evaluate.run_eval --config "$CONFIG" fileroot="${BASEDIR}" "$@" \
+  2>&1 | tee "${LOG_FILE}"

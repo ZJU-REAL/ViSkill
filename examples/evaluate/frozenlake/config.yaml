@@ -1,0 +1,50 @@
+defaults:
+  - ../../../vagen/configs/eval_default
+
+fileroot: .
+
+envs:
+  - name: FrozenLake
+    n_envs: 256
+    tag_id: frozenlake_test
+    seed: [10001, 10256, 1]
+    max_turns: 5
+    response_length_per_turn: 512
+    config:
+      render_mode: vision
+      size: 4
+      p: 0.8
+      is_slippery: false
+      slip_prob: 0.0
+      max_actions_per_step: 5
+      prompt_format: free_think
+
+experiment:
+  dump_dir: ${fileroot}/rollouts/eval_frozenlake
+  default_max_turns: 5
+
+run:
+  backend: "openai"
+  base_seed: 0
+  max_concurrent_jobs: 64
+  resume: skip_completed
+  live_summary: true
+
+backends:
+  sglang:
+    base_url: "http://127.0.0.1:30000/v1"
+    api_key: "EMPTY"
+    model: ""
+    max_concurrency: 2
+    max_retries: 6
+    min_backoff: 0.5
+    max_backoff: 8.0
+
+  openai:
+    api_key: ""               # or export OPENAI_API_KEY
+    base_url: null
+    model: "gpt-4.1-mini"
+    max_concurrency: 8
+    max_retries: 6
+    min_backoff: 0.5
+    max_backoff: 8.0

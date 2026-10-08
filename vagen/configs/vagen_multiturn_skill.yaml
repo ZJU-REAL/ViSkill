@@ -1,0 +1,113 @@
+hydra:
+  searchpath:
+    - file:../../verl/verl/trainer/config
+
+defaults:
+  - ppo_trainer
+  - env_registry
+  - _self_
+
+# ============================================================================
+# Inherited from vagen_multiturn (duplicated because Hydra doesn't allow
+# searchpath override in non-primary configs)
+# ============================================================================
+
+data:
+  max_prompt_length: 9000
+  max_response_length: 8000
+  train_batch_size: 128
+  return_raw_chat: True
+  return_multi_modal_inputs: True
+  apply_chat_template_kwargs:
+    enable_thinking: False
+  custom_cls:
+    path: "vagen/gym_agent_dataset.py"
+    name: AgenticDataset
+
+actor_rollout_ref:
+  hybrid_engine: True
+  rollout:
+    name: sglang
+    multi_turn:
+      enable: True
+
+trainer:
+  val_before_train: True
+  skip_pad_tokens: True
+  replace_image_tokens_for_logging: True
+  max_actor_ckpt_to_keep: 1
+  max_critic_ckpt_to_keep: 1
+  concat_multi_turn: True
+  log_image:
+    enable: false
+    max_pending: 2
+    png_compress_level: 0
+  log_skill_image:
+    enable: false           # Whether to dump retrieved-skill / initial-state images with validation generations
+
+algorithm:
+  gamma: 1.0
+  lam: 1.0
+
+filter:
+  name: reward_variance_top_p
+  filter_kwargs:
+    top_p: 0.9
+  enable: False
+
+huggingface_hub:
+  hf_save_freq: null
+  repo_id: vagen-training
+  private: false
+  upload_contents: ['hf_model']
+
+# ============================================================================
+# Skill System Configuration
+# ============================================================================
+
+skill_system:
+  enable: true
+
+  library:
+    path: ./skill_library
+    max_size: 100
+
+  cold_start:
+    enable: false
+    source: null            # path to pre-built skill library
+
+  retrieval:
+    similarity_weight: 0.9  # score = sim * weight + utility * (1 - weight)
+    min_score: 0.8          # only use skill when score >= this
+
+  utility:
+    ema_alpha: 0.1
+    initial: 0.5
+
+  reward:
+    mode: success             # success / bfs_process / skill_guided
+    format_reward: 0.1
+    guided_weight: 0.8        # max prefix match bonus (< success_reward to prevent reward hacking)
+    step_reward: 0.05           # per-step ±reward for bfs_process mode
+    unsolvable_penalty: -0.2    # penalty for pushing into unsolvable state
+
+  distill:
+    mode: self              # self / api
+    model: null
+    api_base: null
+    api_key: null
+    max_retries: 3
+    quality_ratio: 1     # total_actions / bfs_steps <= this to distill
+    min_score: 0.9          # only distill when no existing skill scores above this
+
+  render:
+    scale: 1.0              # Final skill-image scale after composing strategy + trajectory
+    strategy:
+      enable: true
+      type: vision       # vision / text
+    trajectory:
+      enable: true
+      action_type: text     # text / arrow
+      show_title: true
+      draw_path: true       # draw red trajectory line on frames
+      thumbnail_size: null  # resize frames (e.g. 120 for frozenlake)

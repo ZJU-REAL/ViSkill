@@ -1,0 +1,35 @@
+# Local settings and credentials
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+venv/
+.vscode/
+.idea/
+
+# Python and build caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+
+# Training outputs and local model artifacts
+exps/
+outputs/
+multirun/
+rollouts/
+wandb/
+checkpoints/
+skill_library/
+skill_library_cold_start/
+skill_library_cold_start_*/
+*.log
+*.safetensors
+*.pt
+*.pth
+*.ckpt

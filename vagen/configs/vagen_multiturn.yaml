@@ -1,0 +1,78 @@
+# ============================================================================
+# VAGEN Multi-Turn PPO Training Configuration
+# Overrides defaults from ppo_trainer.yaml and env_registry.yaml
+# ============================================================================
+
+hydra:
+  searchpath:
+    - file:../../verl/verl/trainer/config  # Hydra search path pointing to verl's default config directory
+
+defaults:
+  - ppo_trainer    # Base PPO trainer config (actor/critic/rollout/algorithm defaults)
+  - env_registry   # Environment registry (maps env names -> impl classes, e.g. Sokoban, FrozenLake)
+  - _self_         # This file's values override the above defaults
+
+# ============================================================================
+# Data Configuration
+# ============================================================================
+data:
+  max_prompt_length: 9000          # Max token length for input prompts (system prompt + first user turn message)
+  max_response_length: 8000        # Max token length for first assiastant turn response + subsequent multi-turn messages
+  train_batch_size: 128            
+  return_raw_chat: True            
+  return_multi_modal_inputs: True
+  apply_chat_template_kwargs:
+    enable_thinking: False                # Whether to apply a chat template that encourages chain-of-thought style reasoning in the assistant's responses
+  custom_cls:
+    path: "vagen/gym_agent_dataset.py"  
+    name: AgenticDataset                
+
+# ============================================================================
+# Actor / Rollout / Reference Model Configuration
+# ============================================================================
+actor_rollout_ref:
+  hybrid_engine: True   
+  rollout:
+    name: sglang        
+    multi_turn:
+      enable: True       
+
+# ============================================================================
+# Trainer Configuration
+# ============================================================================
+trainer:
+  val_before_train: True                    
+  skip_pad_tokens: True                      # Strip pad tokens when decoding for logging 
+  replace_image_tokens_for_logging: True    # By default, we want to convert a sequence of image tokens with readable placeholders in logs
+  max_actor_ckpt_to_keep: 1                # Max number of actor checkpoints to keep (saves disk space)
+  max_critic_ckpt_to_keep: 1               # Max number of critic checkpoints to keep
+  concat_multi_turn: True                 # Concatenate multi-turn messages for rollout and training
+  log_image:
+    enable: false           # Whether to log environment-rendered images to logger (e.g. wandb)
+    max_pending: 2          # Max pending async image dump tasks (prevents IO from blocking training)
+    png_compress_level: 0   # PNG compression level (0 = no compression, fastest)
+
+# ============================================================================
+# Algorithm Configuration
+# ============================================================================
+algorithm:
+  gamma: 1.0                 
+  lam: 1.0                   
+
+# ============================================================================
+# Data Filter Configuration
+# ============================================================================
+filter:
+  name: reward_variance_top_p   
+  filter_kwargs:
+    top_p: 0.9                 
+  enable: False                 
+
+# ============================================================================
+# HuggingFace Hub Upload Configuration
+# ============================================================================
+huggingface_hub:
+  hf_save_freq: null            # null = no auto-upload
+  repo_id: vagen-training       
+  private: false
+  upload_contents: ['hf_model']            

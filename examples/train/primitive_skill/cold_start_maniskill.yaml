@@ -1,0 +1,27 @@
+env: maniskill
+
+seed: [0, 50, 1]            # [start, end, max_repeat_per_seed]
+
+size: 6                     # target number of skills per task
+dedup_threshold: 0.85
+output: ./skill_library_cold_start/maniskill
+
+env_config:
+  gpu: 0
+  max_steps: 10
+
+distill:
+  model: null
+  api_base: "YOUR_API_BASE_URL"
+  api_key: "YOUR_API_KEY"
+  max_retries: 3
+
+render:
+  strategy:
+    enable: true
+    type: vision
+  trajectory:
+    enable: true
+    action_type: text
+    show_title: true
+    draw_path: false
