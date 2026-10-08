@@ -66,41 +66,22 @@ Training scripts use Qwen2.5-VL-3B-Instruct by default. Task configurations and 
 
 > **Note:** Before training, adjust `CUDA_VISIBLE_DEVICES` and `REF_MODEL_PATH` in the scripts to match your setup. For PrimitiveSkill, start the environment server first and ensure `base_urls` in the task YAML files matches its address.
 
-**Sokoban**
-
-```bash
-# PPO baseline
-bash examples/train/sokoban/train_ppo_qwen25vl3b_base.sh
-
-# ViSkill
-bash examples/train/sokoban/train_ppo_qwen25vl3b_skill.sh
-```
-
-**FrozenLake**
-
-```bash
-# PPO baseline
-bash examples/train/frozenlake/train_ppo_qwen25vl3b_base.sh
-
-# ViSkill
-bash examples/train/frozenlake/train_ppo_qwen25vl3b_skill.sh
-```
-
-**PrimitiveSkill**
-
-Start the environment server in a separate terminal:
+For PrimitiveSkill, start the environment server in a separate terminal:
 
 ```bash
 bash examples/train/primitive_skill/start_env_server.sh
 ```
 
-Then launch training:
+Launch training for the desired environment:
 
 ```bash
-# PPO baseline
-bash examples/train/primitive_skill/train_ppo_qwen25vl3b_base.sh
+# Sokoban
+bash examples/train/sokoban/train_ppo_qwen25vl3b_skill.sh
 
-# ViSkill
+# FrozenLake
+bash examples/train/frozenlake/train_ppo_qwen25vl3b_skill.sh
+
+# PrimitiveSkill (requires the environment server)
 bash examples/train/primitive_skill/train_ppo_qwen25vl3b_skill.sh
 ```
 
@@ -116,9 +97,7 @@ bash examples/train/sokoban/generate_cold_start.sh
 bash examples/train/frozenlake/generate_cold_start.sh
 
 # PrimitiveSkill (requires the environment server)
-python -m vagen.skills.cold_start \
-  --config-path="$PWD/examples/train/primitive_skill" \
-  --config-name=cold_start_maniskill
+bash examples/train/primitive_skill/generate_cold_start.sh
 ```
 
 Set `skill_system.cold_start.enable=true` and point `skill_system.cold_start.source` to the generated library in the corresponding ViSkill training script.
