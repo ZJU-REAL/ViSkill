@@ -128,4 +128,6 @@ For a local checkpoint, set `MODEL_PATH` and `MODEL_NAME` when launching the mod
 
 This project builds on [VAGEN](https://github.com/mll-lab-nu/VAGEN) and [veRL](https://github.com/volcengine/verl). We thank the authors for their open-source contributions. The required veRL source is bundled for reproducibility, with original licenses and notices retained.
 
-<!-- Add a BibTeX citation once publication details are available. -->
+## ⭐️ Citation
+
+If you find ViSkill useful, please consider citing our work:
