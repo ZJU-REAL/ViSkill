@@ -8,8 +8,11 @@ ViSkill: Reinforcing VLM Agents with Evolving Visual-Native Skills
     <a href="" target="_blank">
       <img alt="arXiv" src="https://img.shields.io/badge/arXiv-ViSkill-red?logo=arxiv" height="20" />
     </a>
-    <a href="https://huggingface.co/hongxingli/ViSkill" target="_blank">
-      <img alt="ViSkill Models" src="https://img.shields.io/badge/%F0%9F%A4%97%20Models-ViSkill-ffc107" height="20" />
+    <a href="https://huggingface.co/hongxingli/ViSkill-Sokoban" target="_blank">
+      <img alt="ViSkill-Sokoban Model" src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ViSkill--Sokoban-ffc107" height="20" />
+    </a>
+    <a href="https://huggingface.co/hongxingli/ViSkill-FrozenLake" target="_blank">
+      <img alt="ViSkill-FrozenLake Model" src="https://img.shields.io/badge/%F0%9F%A4%97%20Model-ViSkill--FrozenLake-ffc107" height="20" />
     </a>
   </p>
 </div>
@@ -36,7 +39,7 @@ ViSkill converges faster than standard PPO across all three environments, with o
 
 ## 🎉 News
 
-- **[2026/10/08]** We release our [code](https://github.com/ZJU-REAL/ViSkill) and [models](https://huggingface.co/hongxingli/ViSkill) for Sokoban and FrozenLake.
+- **[2026/10/08]** We release our [code](https://github.com/ZJU-REAL/ViSkill) and models for [Sokoban](https://huggingface.co/hongxingli/ViSkill-Sokoban) and [FrozenLake](https://huggingface.co/hongxingli/ViSkill-FrozenLake).
 
 ## 📖 Usage
 
