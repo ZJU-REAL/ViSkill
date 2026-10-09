@@ -134,3 +134,15 @@ This project builds on [VAGEN](https://github.com/mll-lab-nu/VAGEN) and [veRL](h
 ## ⭐️ Citation
 
 If you find ViSkill useful, please consider citing our work:
+
+```bibtex
+@misc{li2026viskillreinforcingvlmagents,
+      title={ViSkill: Reinforcing VLM Agents with Evolving Visual-Native Skills},
+      author={Hongxing Li and Dingming Li and Yixin Li and Yong Du and Wenqi Zhang and Weiming Lu and Jun Xiao and Yueting Zhuang and Yongliang Shen},
+      year={2026},
+      eprint={2610.12403},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.12403},
+}
+```
