@@ -4,8 +4,7 @@ ViSkill: Reinforcing VLM Agents with Evolving Visual-Native Skills
 
 <div align="center">
   <p>
-    <!-- Replace the empty href with the paper URL. -->
-    <a href="" target="_blank">
+    <a href="https://arxiv.org/pdf/2610.12403" target="_blank">
       <img alt="arXiv" src="https://img.shields.io/badge/arXiv-ViSkill-red?logo=arxiv" height="20" />
     </a>
     <a href="https://huggingface.co/hongxingli/ViSkill-Sokoban" target="_blank">
@@ -39,6 +38,7 @@ ViSkill converges faster than standard PPO across all three environments, with o
 
 ## 🎉 News
 
+- **[2026/10/09]** Our [paper](https://arxiv.org/pdf/2610.12403) is now available on arXiv.
 - **[2026/10/08]** We release our [code](https://github.com/ZJU-REAL/ViSkill) and models for [Sokoban](https://huggingface.co/hongxingli/ViSkill-Sokoban) and [FrozenLake](https://huggingface.co/hongxingli/ViSkill-FrozenLake).
 
 ## 📖 Usage
